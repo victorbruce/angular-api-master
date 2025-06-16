@@ -4,10 +4,13 @@ import { ApiClientService } from '../../services/api-client.service';
 import { API_BASE_URL } from '../../shared/constants';
 import { RouterModule } from '@angular/router';
 import { Post } from '../../models';
+import { PostComponent } from '../../components/post/post.component';
+import { DisplayErrorComponent } from "../../components/display-error/display-error.component";
+import { LoaderComponent } from "../../components/loader/loader.component";
 
 @Component({
   selector: 'app-posts',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, PostComponent, DisplayErrorComponent, LoaderComponent],
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.scss',
 })
