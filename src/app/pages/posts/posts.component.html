@@ -1,10 +1,5 @@
-<div *ngIf="loading">Loading posts...</div>
-<div *ngIf="error">{{ error }}</div>
+<app-loader *ngIf="loading"></app-loader>
+<app-display-error *ngIf="error" [error]="error"></app-display-error>
 <ul *ngIf="!loading && !error">
-  <li *ngFor="let post of posts">
-    <a [routerLink]="['posts/', post.id]">
-      <h3>{{ post.title }}</h3>
-      <p>{{ post.body }}</p>
-    </a>
-  </li>
+  <app-post *ngFor="let post of posts" [post]="post"></app-post>
 </ul>
