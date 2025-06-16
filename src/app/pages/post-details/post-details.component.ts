@@ -4,10 +4,12 @@ import { ApiClientService } from '../../services/api-client.service';
 import { CommonModule } from '@angular/common';
 import { Post, Comment } from '../../models/';
 import { API_BASE_URL } from '../../shared/constants';
+import { LoaderComponent } from '../../components/loader/loader.component';
+import { DisplayErrorComponent } from '../../components/display-error/display-error.component';
 
 @Component({
   selector: 'app-post-details',
-  imports: [CommonModule],
+  imports: [CommonModule, LoaderComponent, DisplayErrorComponent],
   templateUrl: './post-details.component.html',
   styleUrl: './post-details.component.scss',
 })

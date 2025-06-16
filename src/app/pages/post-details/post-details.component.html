@@ -1,6 +1,5 @@
-<div *ngIf="loading">Loading...</div>
-<div *ngIf="error" class="error">{{ error }}</div>
-
+<app-loader *ngIf="loading"></app-loader>
+<app-display-error *ngIf="error" [error]="error"></app-display-error>
 <div *ngIf="post && !loading">
   <h2>{{ post.title }}</h2>
   <p>{{ post.body }}</p>
