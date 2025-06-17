@@ -1,0 +1,22 @@
+<form [formGroup]="postForm" (ngSubmit)="submit()">
+  <div>
+    <label>User ID:</label>
+    <input type="number" formControlName="userId" />
+  </div>
+  <div>
+    <label>Title:</label>
+    <input type="text" formControlName="title" />
+  </div>
+  <div>
+    <label>Body:</label>
+    <textarea formControlName="body"></textarea>
+  </div>
+  <button type="submit" [disabled]="loading || postForm.invalid">
+    Create Post
+  </button>
+</form>
+<app-display-error
+  [error]="errorMessage"
+  *ngIf="errorMessage"
+></app-display-error>
+<div *ngIf="successMessage">{{ successMessage }}</div>
