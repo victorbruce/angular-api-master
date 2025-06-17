@@ -1,5 +1,8 @@
 <app-loader *ngIf="loading"></app-loader>
 <app-display-error *ngIf="error" [error]="error"></app-display-error>
+<div>
+  <a routerLink="/posts/new">Create New Post</a>
+</div>
 <ul *ngIf="!loading && !error">
   <app-post *ngFor="let post of posts" [post]="post"></app-post>
 </ul>
