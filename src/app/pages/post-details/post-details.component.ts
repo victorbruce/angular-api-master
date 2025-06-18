@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ApiClientService } from '../../services/api-client.service';
+import { PostService } from '../../services/post.service';
 import { CommonModule } from '@angular/common';
 import { Post, Comment } from '../../models/';
 import { API_BASE_URL } from '../../shared/constants';
@@ -15,6 +16,8 @@ import { DisplayErrorComponent } from '../../components/display-error/display-er
 })
 export class PostDetailsComponent implements OnInit {
   private route: ActivatedRoute = inject(ActivatedRoute);
+  private postService = inject(PostService);
+
   post: Post | null = null;
   comments: Comment[] = [];
   loading = false;
@@ -28,27 +31,20 @@ export class PostDetailsComponent implements OnInit {
     this.postId = this.route.snapshot.paramMap.get('id');
 
     if (this.postId) {
-      this.fetchPostAndComments();
+      this.subscribeToPost();
+      this.fetchComments();
     }
   }
 
-  fetchPostAndComments(): void {
-    this.loading = true;
-    this.error = null;
-
-    this.apiClient.get<Post>(`${API_BASE_URL}/posts/${this.postId}`).subscribe({
-      next: (data) => {
-        this.post = data;
-        this.fetchComments();
-      },
-      error: (err) => {
-        this.error = 'Failed to load post';
-        this.loading = false;
-      },
+  subscribeToPost(): void {
+    this.postService.posts$.subscribe((posts) => {
+      this.post = this.postService.getByPostId(+this.postId!) ?? null;
     });
   }
 
   fetchComments(): void {
+    this.loading = true;
+    this.error = null;
     this.apiClient
       .get<Comment[]>(`${API_BASE_URL}/posts/${this.postId}/comments`)
       .subscribe({
