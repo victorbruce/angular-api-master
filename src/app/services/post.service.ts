@@ -22,4 +22,8 @@ export class PostService {
   getPosts(): Post[] {
     return this.postsSubject.value;
   }
+
+  getByPostId(postId: number): Post | undefined {
+    return this.postsSubject.value.find((post) => post.id === postId);
+  }
 }
