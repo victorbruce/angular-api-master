@@ -51,8 +51,7 @@ export class PostsComponent implements OnInit {
           });
         },
         error: (err) => {
-          this.error = 'Failed to load posts';
-          console.error(err);
+          this.error = err.message;
           this.loading = false;
         },
       });

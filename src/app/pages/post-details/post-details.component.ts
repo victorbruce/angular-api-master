@@ -53,7 +53,7 @@ export class PostDetailsComponent implements OnInit {
           this.loading = false;
         },
         error: (err) => {
-          this.error = 'Failed to load comments';
+          this.error = err.message || 'Failed to load comments';
           this.loading = false;
         },
       });
