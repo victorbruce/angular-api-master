@@ -1,0 +1,18 @@
+<app-loader *ngIf="loading"></app-loader>
+<app-display-error
+  [error]="errorMessage"
+  *ngIf="errorMessage"
+></app-display-error>
+<form [formGroup]="postForm" (ngSubmit)="submit()">
+  <div>
+    <label>Title:</label>
+    <input type="text" formControlName="title" />
+  </div>
+  <div>
+    <label>Body:</label>
+    <textarea formControlName="body"></textarea>
+  </div>
+  <button type="submit" [disabled]="loading || postForm.invalid">
+    Update Post
+  </button>
+</form>
