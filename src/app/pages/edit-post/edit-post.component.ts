@@ -60,22 +60,32 @@ export class EditPostComponent implements OnInit {
       ...this.postForm.value,
     };
 
-    this.apiClient
-      .put<Post>(`${API_BASE_URL}/posts/${this.postId}`, updatedPost)
-      .subscribe({
-        next: (post) => {
-          this.postService.setPosts(
-            this.postService
-              .getPosts()
-              .map((p) => (p.id === this.postId ? post : p))
-          );
-          this.loading = false;
-          this.router.navigate(['/']);
-        },
-        error: (err) => {
-          this.errorMessage = err.message;
-          this.loading = false;
-        },
-      });
+    if (this.postId <= 100) {
+      this.apiClient
+        .put<Post>(`${API_BASE_URL}/posts/${this.postId}`, updatedPost)
+        .subscribe({
+          next: (post) => {
+            this.postService.setPosts(
+              this.postService
+                .getPosts()
+                .map((p) => (p.id === this.postId ? post : p))
+            );
+            this.loading = false;
+            this.router.navigate(['/']);
+          },
+          error: (err) => {
+            this.errorMessage = err.message;
+            this.loading = false;
+          },
+        });
+    } else {
+      this.postService.setPosts(
+        this.postService
+          .getPosts()
+          .map((p) => (p.id === this.postId ? updatedPost : p))
+      );
+      this.loading = false;
+      this.router.navigate(['/']);
+    }
   }
 }
