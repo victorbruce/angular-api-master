@@ -42,6 +42,10 @@ export class PostsComponent implements OnInit {
     if (this.postService.getPosts().length === 0) {
       this.loading = true;
       this.error = null;
+
+      // clear the cache for posts before fetching
+      this.apiClient.clearCache(`${API_BASE_URL}/posts`);
+      
       this.apiClient.get<Post[]>(`${API_BASE_URL}/posts`).subscribe({
         next: (data) => {
           this.postService.setPosts(data);
