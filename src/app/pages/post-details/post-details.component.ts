@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ApiClientService } from '../../services/api-client.service';
 import { CommonModule } from '@angular/common';
 import { Post, Comment } from '../../models/';
@@ -9,7 +9,7 @@ import { DisplayErrorComponent } from '../../components/display-error/display-er
 
 @Component({
   selector: 'app-post-details',
-  imports: [CommonModule, LoaderComponent, DisplayErrorComponent],
+  imports: [CommonModule, RouterModule, LoaderComponent, DisplayErrorComponent],
   templateUrl: './post-details.component.html',
   styleUrl: './post-details.component.scss',
 })
