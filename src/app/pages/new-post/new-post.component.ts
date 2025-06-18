@@ -62,9 +62,8 @@ export class NewPostComponent {
         this.router.navigate(['/']);
       },
       error: (err) => {
-        this.errorMessage = 'Failed to create post. Please try again.';
+        this.errorMessage = err.message;
         this.loading = false;
-        console.error('Error creating post:', err);
       },
     });
   }

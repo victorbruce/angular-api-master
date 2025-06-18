@@ -12,11 +12,16 @@ import { Post } from '../../models/';
 import { API_BASE_URL } from '../../shared/constants';
 import { CommonModule } from '@angular/common';
 import { DisplayErrorComponent } from '../../components/display-error/display-error.component';
-import { LoaderComponent } from "../../components/loader/loader.component";
+import { LoaderComponent } from '../../components/loader/loader.component';
 
 @Component({
   selector: 'app-edit-post',
-  imports: [CommonModule, ReactiveFormsModule, DisplayErrorComponent, LoaderComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    DisplayErrorComponent,
+    LoaderComponent,
+  ],
   templateUrl: './edit-post.component.html',
   styleUrl: './edit-post.component.scss',
 })
@@ -33,7 +38,6 @@ export class EditPostComponent implements OnInit {
   errorMessage: string | null = null;
 
   ngOnInit(): void {
-    // Initialization logic can go here
     this.postId = +this.route.snapshot.paramMap.get('id')!;
     const post = this.postService.getByPostId(this.postId);
     if (post) {
@@ -68,8 +72,8 @@ export class EditPostComponent implements OnInit {
           this.loading = false;
           this.router.navigate(['/']);
         },
-        error: () => {
-          this.errorMessage = 'Failed to update post. Please try again.';
+        error: (err) => {
+          this.errorMessage = err.message;
           this.loading = false;
         },
       });
