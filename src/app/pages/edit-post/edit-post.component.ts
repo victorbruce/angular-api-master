@@ -44,6 +44,7 @@ export class EditPostComponent implements OnInit {
       this.postForm = this.fb.group({
         title: [post.title, Validators.required],
         body: [post.body, Validators.required],
+        userId: [post?.userId || 1, Validators.required],
       });
     }
   }
