@@ -39,7 +39,7 @@ export class PostsComponent implements OnInit {
   }
 
   fetchPosts(): void {
-    if (this.postService.getPosts().length === 0) {
+    if (this.postService.getPosts()?.length === 0) {
       this.loading = true;
       this.error = null;
 
