@@ -4,7 +4,7 @@ An Angular application that demonstrates proficiency in working with
 APIs, including data fetching, error handling, authentication, optimization, and
 environment configuration.
 
-Live URL: [](https://vb-product-list-debugging.netlify.app/)
+Live URL: [https://vb-angular-api-mastery.netlify.app/](https://vb-angular-api-mastery.netlify.app/)
 
 ## 📌 Table of Contents
 
