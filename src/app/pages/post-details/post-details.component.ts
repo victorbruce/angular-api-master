@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ApiClientService } from '../../services/api-client.service';
 import { PostService } from '../../services/post.service';
+import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Post, Comment } from '../../models/';
 import { API_BASE_URL } from '../../shared/constants';
@@ -17,7 +18,9 @@ import { DisplayErrorComponent } from '../../components/display-error/display-er
 export class PostDetailsComponent implements OnInit {
   private route: ActivatedRoute = inject(ActivatedRoute);
   private postService = inject(PostService);
-
+  private authService = inject(AuthService);
+  isLoggedIn$ = this.authService.isLoggedIn$;
+  
   post: Post | null = null;
   comments: Comment[] = [];
   loading = false;

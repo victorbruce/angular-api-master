@@ -2,7 +2,11 @@
 <app-display-error *ngIf="error" [error]="error"></app-display-error>
 
 <div *ngIf="post && !loading">
-  <button [routerLink]="['/posts', post.id, 'edit']">Edit</button>
+  <ng-container *ngIf="isLoggedIn$ | async">
+    <button *ngIf="post" [routerLink]="['/posts', post.id, 'edit']">
+      Edit
+    </button>
+  </ng-container>
   <h2>{{ post.title }}</h2>
   <p>{{ post.body }}</p>
   <h3>Comments</h3>
