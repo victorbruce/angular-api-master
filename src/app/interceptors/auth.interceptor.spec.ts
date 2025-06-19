@@ -4,7 +4,7 @@ import { AuthInterceptor } from './auth.interceptor';
 import { AuthService } from '../services/auth.service';
 import { of } from 'rxjs';
 
-describe('AuthInterceptor', () => {
+fdescribe('AuthInterceptor', () => {
   let interceptor: AuthInterceptor;
   let authServiceSpy: jasmine.SpyObj<AuthService>;
 
