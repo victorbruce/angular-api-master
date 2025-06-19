@@ -3,6 +3,7 @@ import { PostsComponent } from './pages/posts/posts.component';
 import { PostDetailsComponent } from './pages/post-details/post-details.component';
 import { NewPostComponent } from './pages/new-post/new-post.component';
 import { EditPostComponent } from './pages/edit-post/edit-post.component';
+import { LoginComponent } from './pages/login/login.component';
 
 export const routes: Routes = [
   {
@@ -10,6 +11,11 @@ export const routes: Routes = [
     component: PostsComponent,
     title: 'Posts',
     pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    title: 'Login',
   },
   {
     path: 'posts/new',
