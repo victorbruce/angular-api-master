@@ -1,0 +1,9 @@
+<nav>
+  <a [routerLink]="['/']">Angular API Mastery</a>
+  <ng-container *ngIf="isLoggedIn$ | async; else loggedOut">
+    <button (click)="logout()">Logout</button>
+  </ng-container>
+  <ng-template #loggedOut>
+    <a [routerLink]="['login']">Login</a>
+  </ng-template>
+</nav>
