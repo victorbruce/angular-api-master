@@ -26,6 +26,11 @@ export class PostsComponent implements OnInit {
   loading = false;
   error: string | null = null;
 
+  currentPage = 1;
+  pageSize = 10;
+  totalPages = 0;
+  pagedPosts: Post[] = [];
+
   constructor(
     private apiClient: ApiClientService,
     private postService: PostService
@@ -34,6 +39,8 @@ export class PostsComponent implements OnInit {
   ngOnInit(): void {
     this.postService.posts$.subscribe((posts) => {
       this.posts = posts;
+      this.currentPage = 1;
+      this.updatePagedPosts();
     });
     this.fetchPosts();
   }
@@ -45,20 +52,38 @@ export class PostsComponent implements OnInit {
 
       // clear the cache for posts before fetching
       this.apiClient.clearCache(`${API_BASE_URL}/posts`);
-      
+
       this.apiClient.get<Post[]>(`${API_BASE_URL}/posts`).subscribe({
         next: (data) => {
           this.postService.setPosts(data);
-          this.postService.posts$.subscribe((posts) => {
-            this.posts = posts;
-            this.loading = false;
-          });
+          this.loading = false;
         },
         error: (err) => {
           this.error = err.message;
           this.loading = false;
         },
       });
+    }
+  }
+
+  updatePagedPosts() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.pagedPosts = this.posts.slice(start, end);
+    this.totalPages = Math.ceil(this.posts.length / this.pageSize);
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagedPosts();
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePagedPosts();
     }
   }
 }
