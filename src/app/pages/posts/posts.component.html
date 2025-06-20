@@ -4,9 +4,19 @@
 <br />
 
 <div class="pagination-controls">
-  <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+  <button
+    class="previous-btn"
+    (click)="prevPage()"
+    [disabled]="currentPage === 1"
+  >
+    Previous
+  </button>
   <span>Page {{ currentPage }} of {{ totalPages }}</span>
-  <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+  <button
+    class="next-btn"
+    (click)="nextPage()"
+    [disabled]="currentPage === totalPages"
+  >
     Next
   </button>
 </div>
@@ -16,9 +26,19 @@
 </div>
 
 <div class="pagination-controls">
-  <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+  <button
+    class="previous-btn"
+    (click)="prevPage()"
+    [disabled]="currentPage === 1"
+  >
+    Previous
+  </button>
   <span>Page {{ currentPage }} of {{ totalPages }}</span>
-  <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+  <button
+    class="next-btn"
+    (click)="nextPage()"
+    [disabled]="currentPage === totalPages"
+  >
     Next
   </button>
 </div>

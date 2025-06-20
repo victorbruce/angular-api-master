@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiClientService } from '../../services/api-client.service';
-import { PostService } from '../../services/post.service';
 import { API_BASE_URL } from '../../shared/constants';
 import { RouterModule } from '@angular/router';
 import { Post } from '../../models';
@@ -29,33 +28,34 @@ export class PostsComponent implements OnInit {
   currentPage = 1;
   pageSize = 10;
   totalPages = 0;
-  pagedPosts: Post[] = [];
 
-  constructor(
-    private apiClient: ApiClientService,
-    private postService: PostService
-  ) {}
+  constructor(private apiClient: ApiClientService) {}
 
   ngOnInit(): void {
-    this.postService.posts$.subscribe((posts) => {
-      this.posts = posts;
-      this.currentPage = 1;
-      this.updatePagedPosts();
-    });
-    this.fetchPosts();
+    this.fetchPosts(this.currentPage, this.pageSize);
   }
 
-  fetchPosts(): void {
-    if (this.postService.getPosts()?.length === 0) {
-      this.loading = true;
-      this.error = null;
+  fetchPosts(page: number = 1, limit: number = 10): void {
+    this.loading = true;
+    this.error = null;
 
-      // clear the cache for posts before fetching
-      this.apiClient.clearCache(`${API_BASE_URL}/posts`);
-
-      this.apiClient.get<Post[]>(`${API_BASE_URL}/posts`).subscribe({
-        next: (data) => {
-          this.postService.setPosts(data);
+    this.apiClient
+      .getWithResponse<Post[]>(
+        `${API_BASE_URL}/posts?_page=${page}&_limit=${limit}`,
+        {
+          observe: 'response',
+        }
+      )
+      .subscribe({
+        next: (response) => {
+          if ('body' in response && response.body) {
+            this.posts = response.body;
+            const totalCount = Number(response.headers.get('x-total-count'));
+            this.totalPages = Math.ceil(totalCount / this.pageSize);
+          } else {
+            this.posts = [];
+            this.totalPages = 0;
+          }
           this.loading = false;
         },
         error: (err) => {
@@ -63,27 +63,19 @@ export class PostsComponent implements OnInit {
           this.loading = false;
         },
       });
-    }
-  }
-
-  updatePagedPosts() {
-    const start = (this.currentPage - 1) * this.pageSize;
-    const end = start + this.pageSize;
-    this.pagedPosts = this.posts.slice(start, end);
-    this.totalPages = Math.ceil(this.posts.length / this.pageSize);
   }
 
   prevPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.updatePagedPosts();
+      this.fetchPosts(this.currentPage, this.pageSize);
     }
   }
 
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
-      this.updatePagedPosts();
+      this.fetchPosts(this.currentPage, this.pageSize);
     }
   }
 }
