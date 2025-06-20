@@ -743,3 +743,32 @@ body {
     margin: 0;
   }
 }
+
+.pagination-controls {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  & .next-btn, .previous-btn {
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+
+    &:hover:not(:disabled) {
+      background-color: #333333;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+  }
+}
