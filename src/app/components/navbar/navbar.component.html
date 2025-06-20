@@ -1,9 +1,14 @@
-<nav>
-  <a [routerLink]="['/']">Angular API Mastery</a>
-  <ng-container *ngIf="isLoggedIn$ | async; else loggedOut">
-    <button (click)="logout()">Logout</button>
-  </ng-container>
-  <ng-template #loggedOut>
-    <a [routerLink]="['login']">Login</a>
-  </ng-template>
+<nav class="header">
+  <div class="header-content">
+    <a [routerLink]="['/']" class="logo">Bloggy</a>
+    <div class="header-menu">
+      <a routerLink="/posts/new" class="header-link">New Post</a>
+      <ng-container *ngIf="isLoggedIn$ | async; else loggedOut">
+        <button (click)="logout()" class="btn btn-primary">Logout</button>
+      </ng-container>
+      <ng-template #loggedOut>
+        <a [routerLink]="['login']" class="btn btn-primary">Login</a>
+      </ng-template>
+    </div>
+  </div>
 </nav>

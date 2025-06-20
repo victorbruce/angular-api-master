@@ -1,6 +1,11 @@
-<li >
+<article class="post-card">
   <a [routerLink]="['posts/', post.id]">
-    <h3>{{ post.title }}</h3>
-    <p>{{ post.body }}</p>
+    <div className="post-header">
+      <span className="post-id">#{{ post.id }}</span>
+      <span className="user-id"></span>
+    </div>
+
+    <h2 class="post-title">{{ post.title }}</h2>
+    <p class="post-body">{{ post.body }}</p>
   </a>
-</li>
+</article>

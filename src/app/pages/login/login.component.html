@@ -1,52 +1,74 @@
-<form [formGroup]="loginForm" (ngSubmit)="submit()">
-  <div>
-    <label>Username:</label>
-    <input type="text" formControlName="username" />
-    <div
-      *ngIf="
-        (loginForm.get('username')?.invalid &&
-          loginForm.get('username')?.dirty) ||
-        loginForm.get('username')?.touched
-      "
-    >
-      <small
-        class="error"
-        *ngIf="loginForm.get('username')?.errors?.['required']"
-      >
-        Username is required.
-      </small>
-      <small
-        class="error"
-        *ngIf="loginForm.get('username')?.errors?.['minlength']"
-      >
-        Username must be at least 2 characters.
-      </small>
+<div class="create-post">
+  <div class="create-post-header">
+    <div class="create-post-icon"></div>
+    <div>
+      <h1>Login</h1>
+      <p>Welcome back!</p>
     </div>
   </div>
-  <div>
-    <label>Password:</label>
-    <input type="password" formControlName="password" />
-    <div
-      *ngIf="
-        (loginForm.get('password')?.invalid &&
-          loginForm.get('password')?.dirty) ||
-        loginForm.get('password')?.touched
-      "
-    >
-      <small
-        class="error"
-        *ngIf="loginForm.get('password')?.errors?.['required']"
+
+  <form [formGroup]="loginForm" (ngSubmit)="submit()" class="create-form">
+    <div class="form-group">
+      <label for="username" class="form-label">Username:</label>
+      <input
+        name="username"
+        id="username"
+        type="text"
+        formControlName="username"
+        class="form-input"
+      />
+      <div
+        *ngIf="
+          (loginForm.get('username')?.invalid &&
+            loginForm.get('username')?.dirty) ||
+          loginForm.get('username')?.touched
+        "
       >
-        Password is required.
-      </small>
-      <small
-        class="error"
-        *ngIf="loginForm.get('password')?.errors?.['minlength']"
-      >
-        Password must be at least 8 characters.
-      </small>
+        <small
+          class="error"
+          *ngIf="loginForm.get('username')?.errors?.['required']"
+        >
+          Username is required.
+        </small>
+        <small
+          class="error"
+          *ngIf="loginForm.get('username')?.errors?.['minlength']"
+        >
+          Username must be at least 2 characters.
+        </small>
+      </div>
     </div>
-  </div>
-  <button type="submit" [disabled]="loginForm.invalid">login</button>
-</form>
-<app-display-error *ngIf="error" [error]="error"></app-display-error>
+    <div class="form-group">
+      <label for="password" class="form-label">Password:</label>
+      <input
+        name="password"
+        id="password"
+        type="password"
+        formControlName="password"
+        class="form-input"
+      />
+      <div
+        *ngIf="
+          (loginForm.get('password')?.invalid &&
+            loginForm.get('password')?.dirty) ||
+          loginForm.get('password')?.touched
+        "
+      >
+        <small
+          class="error"
+          *ngIf="loginForm.get('password')?.errors?.['required']"
+        >
+          Password is required.
+        </small>
+        <small
+          class="error"
+          *ngIf="loginForm.get('password')?.errors?.['minlength']"
+        >
+          Password must be at least 8 characters.
+        </small>
+      </div>
+    </div>
+    <button type="submit" class="submit-button" [disabled]="loginForm.invalid">login</button>
+  </form>
+  <app-display-error *ngIf="error" [error]="error"></app-display-error>
+</div>
