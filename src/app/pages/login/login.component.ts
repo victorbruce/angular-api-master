@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { DisplayErrorComponent } from "../../components/display-error/display-error.component";
+import { DisplayErrorComponent } from '../../components/display-error/display-error.component';
 
 @Component({
   selector: 'app-login',
@@ -27,8 +27,8 @@ export class LoginComponent {
 
   constructor() {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
+      username: ['', [Validators.required, Validators.minLength(2)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 

@@ -42,8 +42,8 @@ export class EditPostComponent implements OnInit {
     const post = this.postService.getByPostId(this.postId);
     if (post) {
       this.postForm = this.fb.group({
-        title: [post.title, Validators.required],
-        body: [post.body, Validators.required],
+        title: [post.title, [Validators.required, Validators.minLength(5)]],
+        body: [post.body, [Validators.required, Validators.minLength(10)]],
         userId: [post?.userId || 1, Validators.required],
       });
     }
