@@ -1,19 +1,43 @@
 <app-loader *ngIf="loading"></app-loader>
 <app-display-error *ngIf="error" [error]="error"></app-display-error>
 
-<div *ngIf="post && !loading">
+<div *ngIf="post && !loading" class="post-detail">
   <ng-container *ngIf="isLoggedIn$ | async">
-    <button *ngIf="post" [routerLink]="['/posts', post.id, 'edit']">
+    <button
+      *ngIf="post"
+      [routerLink]="['/posts', post.id, 'edit']"
+      class="create-button"
+    >
       Edit
     </button>
   </ng-container>
-  <h2>{{ post.title }}</h2>
-  <p>{{ post.body }}</p>
-  <h3>Comments</h3>
-  <ul>
-    <li *ngFor="let comment of comments">
-      <strong>{{ comment.name }}</strong> ({{ comment.email }})
-      <p>{{ comment.body }}</p>
-    </li>
-  </ul>
+
+  <div class="post-detail-header">
+    <div class="post-meta">
+      <span class="post-id">#{{ post.id }}</span>
+    </div>
+  </div>
+
+  <h1 class="post-detail-title">{{ post.title }}</h1>
+  <div class="post-detail-body">
+    <p>{{ post.body }}</p>
+  </div>
+
+  <div class="comments-section">
+    <div class="comments-header">
+      <div class="comments-title">
+        <h2>Comments</h2>
+        <span class="comments-count"></span>
+      </div>
+    </div>
+    <div class="comments-list">
+      <div class="comment-card" *ngFor="let comment of comments">
+        <div class="comment-header">
+          <h3 class="comment-name">{{ comment.name }}</h3>
+          <span class="comment-email">{{ comment.email }}</span>
+        </div>
+        <p class="comment-body">{{ comment.body }}</p>
+      </div>
+    </div>
+  </div>
 </div>
