@@ -33,8 +33,8 @@ export class NewPostComponent {
   constructor() {
     this.postForm = this.fb.group({
       userId: [1, Validators.required],
-      title: ['', Validators.required],
-      body: ['', Validators.required],
+      title: ['', [Validators.required, Validators.minLength(5)]],
+      body: ['', [Validators.required, Validators.minLength(10)]],
     });
   }
 
