@@ -39,10 +39,6 @@ export class ApiClientService {
     );
   }
 
-  public getWithResponse<T>(url: string, options?: any) {
-    return this.http.get<T>(url, options);
-  }
-
   post<T>(url: string, body: T): Observable<T> {
     return this.http.post<T>(url, body).pipe(
       retry(2),
