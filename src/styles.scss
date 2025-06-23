@@ -772,3 +772,9 @@ body {
     }
   }
 }
+
+.post-detail-btns {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
