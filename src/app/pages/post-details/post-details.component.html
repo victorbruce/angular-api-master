@@ -3,13 +3,30 @@
 
 <div *ngIf="post && !loading" class="post-detail">
   <ng-container *ngIf="isLoggedIn$ | async">
-    <button
-      *ngIf="post"
-      [routerLink]="['/posts', post.id, 'edit']"
-      class="create-button"
-    >
-      Edit
-    </button>
+    <div class="post-detail-btns">
+      <button
+        *ngIf="
+          post?.userId != null &&
+          currentUserId != null &&
+          post?.userId === currentUserId
+        "
+        [routerLink]="['/posts', post.id, 'edit']"
+        class="create-button"
+      >
+        Edit
+      </button>
+      <button
+        *ngIf="
+          post?.userId != null &&
+          currentUserId != null &&
+          post?.userId === currentUserId
+        "
+        (click)="deletePost()"
+        class="cancel-button"
+      >
+        Delete
+      </button>
+    </div>
   </ng-container>
 
   <div class="post-detail-header">

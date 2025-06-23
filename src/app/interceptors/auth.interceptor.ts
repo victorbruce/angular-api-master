@@ -32,11 +32,15 @@ export class AuthInterceptor implements HttpInterceptor {
         next: (event) => {
           if (event instanceof HttpResponse) {
             console.log('[HTTP Response]', event);
+          } else {
+            console.log('CACHE Response', event);
           }
         },
         error: (error) => {
           if (error instanceof HttpErrorResponse) {
             console.error('[HTTP Error]', error);
+          } else {
+            console.error('CACHE Error', error);
           }
         },
       })

@@ -1,5 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { ApiClientService } from '../../services/api-client.service';
 import { PostService } from '../../services/post.service';
 import { AuthService } from '../../services/auth.service';
@@ -8,6 +8,7 @@ import { Post, Comment } from '../../models/';
 import { API_BASE_URL } from '../../shared/constants';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { DisplayErrorComponent } from '../../components/display-error/display-error.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-post-details',
@@ -15,12 +16,14 @@ import { DisplayErrorComponent } from '../../components/display-error/display-er
   templateUrl: './post-details.component.html',
   styleUrl: './post-details.component.scss',
 })
-export class PostDetailsComponent implements OnInit {
+export class PostDetailsComponent implements OnInit, OnDestroy {
   private route: ActivatedRoute = inject(ActivatedRoute);
+  private router: Router = inject(Router);
   private postService = inject(PostService);
   private authService = inject(AuthService);
+  private postsSub?: Subscription;
   isLoggedIn$ = this.authService.isLoggedIn$;
-  
+
   post: Post | null = null;
   comments: Comment[] = [];
   loading = false;
@@ -29,6 +32,10 @@ export class PostDetailsComponent implements OnInit {
   constructor(private apiClient: ApiClientService) {}
 
   postId: string | null = null;
+
+  get currentUserId(): string | null {
+    return this.authService.getCurrentUserId?.() ?? null;
+  }
 
   ngOnInit(): void {
     this.postId = this.route.snapshot.paramMap.get('id');
@@ -43,6 +50,10 @@ export class PostDetailsComponent implements OnInit {
     this.postService.posts$.subscribe((posts) => {
       this.post = this.postService.getByPostId(+this.postId!) ?? null;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.postsSub?.unsubscribe();
   }
 
   fetchComments(): void {
@@ -60,5 +71,25 @@ export class PostDetailsComponent implements OnInit {
           this.loading = false;
         },
       });
+  }
+
+  deletePost(): void {
+    if (!this.post) return;
+
+    this.loading = true;
+    this.apiClient.delete(`${API_BASE_URL}/posts/${this.post.id}`).subscribe({
+      next: () => {
+        alert('Post deleted successfully');
+        if (this.post?.id) {
+          this.postService.deletePost(this.post.id);
+          this.router.navigate(['/']);
+          this.loading = false;
+        }
+      },
+      error: (err) => {
+        this.error = err.message || 'Failed to delete post';
+        this.loading = false;
+      },
+    });
   }
 }

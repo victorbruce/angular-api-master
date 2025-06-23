@@ -90,7 +90,15 @@ N/A
 
 ## 📋 Approach
 
-N/A
+- Created an API Client Service to handle all HTTP CRUD operations and caching.
+- Implemented authentication with a mock AuthService storing tokens and user IDs in localStorage.
+- Built PostService for managing posts state and enforcing user-based permissions (e.g., delete).
+- Developed components for listing, creating, editing, and viewing post details.
+- Added server-side pagination using Typicode’s _page and _limit query params.
+- Ensured only post creators can edit or delete their posts via user ID checks.
+- Integrated real-time form validation and user feedback in forms.
+- Wrote comprehensive unit tests for services and components.
+- Deployed the application to Netlify for live access.
 
 ## 🚀 Deployment
 

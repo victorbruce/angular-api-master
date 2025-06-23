@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ApiClientService } from '../../services/api-client.service';
 import { PostService } from '../../services/post.service';
+import { AuthService } from '../../services/auth.service';
 import { Post } from '../../models';
 import { API_BASE_URL } from '../../shared/constants';
 import { DisplayErrorComponent } from '../../components/display-error/display-error.component';
@@ -24,6 +25,7 @@ export class NewPostComponent {
   private fb: FormBuilder = inject(FormBuilder);
   private router: Router = inject(Router);
   private postService: PostService = inject(PostService);
+  private authService: AuthService = inject(AuthService);
 
   postForm: FormGroup;
   successMessage: string | null = null;
@@ -31,8 +33,10 @@ export class NewPostComponent {
   loading: boolean = false;
 
   constructor() {
+    const userId = this.authService.getCurrentUserId?.() || 1;
+    console.log(userId);
     this.postForm = this.fb.group({
-      userId: [1, Validators.required],
+      userId: [userId, Validators.required],
       title: ['', [Validators.required, Validators.minLength(5)]],
       body: ['', [Validators.required, Validators.minLength(10)]],
     });
