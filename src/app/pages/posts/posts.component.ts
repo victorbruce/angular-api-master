@@ -63,6 +63,8 @@ export class PostsComponent implements OnInit {
           this.loading = false;
         },
       });
+    } else {
+      this.posts = this.postService.getPosts();
     }
   }
 
